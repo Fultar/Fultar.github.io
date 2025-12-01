@@ -1,15 +1,35 @@
 # main links
+# 主导航栏
 main:
-  - title: "Posts"
-    url: /year-archive/
-  - title: "Categories"
+  - title: "首页"
+    url: /
+  
+  - title: "文章"
+    url: /posts/
+  
+  - title: "分类"
     url: /categories/
-  - title: "Tags"
+  
+  - title: "标签"
     url: /tags/
-  - title: "Pages"
-    url: /page-archive/
-  - title: "Collections"
-    url: /collection-archive/
-  - title: "External Link"
-    url: https://google.com
-    target: _blank
+  
+  - title: "归档"
+    url: /year-archive/
+  
+  - title: "关于"
+    url: /about/
+  
+  - title: "项目"
+    url: /portfolio/
+  
+  # 外部链接示例
+  - title: "GitHub"
+    url: https://github.com/your-username
+  
+  # 下拉菜单（需要额外配置）
+  - title: "更多"
+    children:
+      - title: "友情链接"
+        url: /links/
+      - title: "留言板"
+        url: /guestbook/
