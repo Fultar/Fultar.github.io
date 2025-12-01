@@ -95,7 +95,7 @@ defaults:
       type: posts
     values:
       show_date: true
-      date_format: "%Y-%m-%d"
+      comments: true
 # Social Sharing
 twitter:
   username               :
