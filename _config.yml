@@ -19,7 +19,7 @@ sidebar:
   nav: "docs"
 
 # Site Settings
-locale                   : "zh-CN"
+locale                   : "en-US"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
 title                    : "My Blog"
 title_separator          : "-"
