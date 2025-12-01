@@ -88,6 +88,13 @@ naver_site_verification  :
 yandex_site_verification :
 baidu_site_verification  :
 
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      show_date: true
 # Social Sharing
 twitter:
   username               :
