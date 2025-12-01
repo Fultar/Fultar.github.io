@@ -94,14 +94,23 @@ yandex_site_verification :
 baidu_site_verification  :
 
 defaults:
-  # _posts
+  # _posts 文章
   - scope:
       path: ""
       type: posts
     values:
-      show_date: true
-      comments: false
-# Social Sharing
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+      toc: true
+      toc_sticky: true
+      sidebar:
+        nav: "docs"  # 使用上面定义的 docs 侧边栏# Social Sharing
+        
+        
 twitter:
   username               :
 facebook:

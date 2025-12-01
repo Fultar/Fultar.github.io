@@ -33,3 +33,39 @@ main:
         url: /links/
       - title: "留言板"
         url: /guestbook/
+        
+# 文章侧边栏导航
+docs:
+  - title: "📚 文章导航"
+    children:
+      - title: "最新文章"
+        url: /posts/
+      - title: "热门分类"
+        url: /categories/
+      - title: "标签云"
+        url: /tags/
+  
+  - title: "🔥 热门文章"
+    children:
+      - title: "Python 入门教程"
+        url: /python-tutorial/
+      - title: "Jekyll 建站指南"
+        url: /jekyll-guide/
+      - title: "Git 使用技巧"
+        url: /git-tips/
+  
+  - title: "📝 分类"
+    children:
+      - title: "技术"
+        url: /categories/#技术
+      - title: "学习笔记"
+        url: /categories/#学习笔记
+      - title: "生活"
+        url: /categories/#生活
+  
+  - title: "🔗 友情链接"
+    children:
+      - title: "GitHub"
+        url: https://github.com/your-username
+      - title: "知乎"
+        url: https://zhihu.com/people/your-id
