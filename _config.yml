@@ -109,8 +109,6 @@ defaults:
       toc_label: "My Table of Contents"   # 目录标题
       toc_icon: "cog"       # 目录图标
       toc_sticky: true       # 目录固定滚动
-      sidebar:
-        nav: "docs"  # 使用上面定义的 docs 侧边栏# Social Sharing
               
 twitter:
   username               :
