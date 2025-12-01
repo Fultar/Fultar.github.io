@@ -17,10 +17,10 @@ minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "n
 # Site Settings
 locale                   : "zh-CN"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
-title                    : "Fultar Blog"
+title                    : "My Blog"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "Fultar"
+name                     : "Xiang Li"
 description              : "我的生信笔记"
 url                      : "https://fultar.github.io/" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
@@ -95,6 +95,7 @@ defaults:
       type: posts
     values:
       show_date: true
+      date_format: "%Y-%m-%d"
 # Social Sharing
 twitter:
   username               :
