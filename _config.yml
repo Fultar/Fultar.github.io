@@ -23,9 +23,10 @@ locale                   : "zh-CN"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
 title                    : "My Blog"
 title_separator          : "-"
-subtitle                 : # site tagline that appears below site title in masthead
+subtitle                 : "分享我的技术与生活" # site tagline that appears below site title in masthead
 name                     : "Xiang Li"
 description              : "我的生信笔记"
+location                 : "China·Shanghai"
 url                      : "https://fultar.github.io/" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "Fultar/Fultar.github.io"  # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -74,7 +75,7 @@ atom_feed:
   hide                   : # true, false (default)
 search                   : true # true, false (default)
 search_full_content      : true # true, false (default)
-search_provider          : google # lunr (default), algolia, google
+search_provider          : lunr # lunr (default), algolia, google
 lunr:
   search_within_pages    : true # true, false (default)
 algolia:
@@ -99,7 +100,7 @@ defaults:
       type: posts
     values:
       show_date: true
-      comments: true
+      comments: false
 # Social Sharing
 twitter:
   username               :
@@ -125,11 +126,11 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
-  location         : "Somewhere"
-  email            :
+  name             : "Xiang Li"
+  avatar           : "/assets/images/bio-photo.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  bio              : "水产养殖 博士研究生"
+  location         : "中国|上海"
+  email            : "lixianghezi@163.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
@@ -153,26 +154,17 @@ author:
 # Site Footer
 footer:
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      # url:
-    - label: "Facebook"
-      icon: "fab fa-fw fa-facebook-square"
-      # url:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url:
-    - label: "GitLab"
-      icon: "fab fa-fw fa-gitlab"
-      # url:
-    - label: "Bitbucket"
-      icon: "fab fa-fw fa-bitbucket"
-      # url:
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      # url:
-  since: "2024"
+      url: "https://github.com/Fultar/"
+    
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:lixianghezi@163.com"
 
+# 版权信息
+copyright: "© 2025 你的名字"
+copyright_url: "https://your-website.com"
 
 # Reading Files
 include:
