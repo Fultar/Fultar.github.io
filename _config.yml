@@ -132,7 +132,7 @@ author:
   location         : "China | Shanghai"
   #email            : "lixianghezi@163.com"
   links:
-    - label: "Email:lixianghezi@163.com.com"
+    - label: "Email: lixianghezi@163.com.com"
       icon: "fas fa-fw fa-envelope-square"
       url: "mailto:lixianghezi@163.com.com"
     - label: "Website"
@@ -144,7 +144,7 @@ author:
     - label: "Facebook"
       icon: "fab fa-fw fa-facebook-square"
       # url: "https://facebook.com/"
-    - label: "GitHub:https://github.com/Fultar/"
+    - label: "GitHub: https://github.com/Fultar/"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/Fultar/"
     - label: "Instagram"
@@ -163,8 +163,8 @@ footer:
       url: "mailto:lixianghezi@163.com"
 
 # 版权信息
-copyright: "© 2025 你的名字"
-copyright_url: "https://your-website.com"
+#copyright: "© 2025 Fultar"
+#copyright_url: "https://your-website.com"
 
 # Reading Files
 include:
