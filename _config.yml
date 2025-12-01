@@ -94,11 +94,14 @@ yandex_site_verification :
 baidu_site_verification  :
 
 defaults:
-  # _posts 文章
+  # _posts 
   - scope:
       path: ""
       type: posts
     values:
+      show_date: true
+      date_format: "%Y-%m-%d"
+      read_time: false
       layout: single
       author_profile: true
       read_time: true
