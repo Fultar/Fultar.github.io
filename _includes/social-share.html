@@ -16,4 +16,75 @@
   <a href="https://bsky.app/intent/compose?text={{ page.title | url_encode }}%20{{ page.url | absolute_url | url_encode }}" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="{{ site.data.ui-text[site.locale].share_on_label | default: 'Share on' }} Bluesky">
     <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
   </a>
+  <!-- Telegram -->
+  <a href="https://t.me/share/url?url={{ page.url | absolute_url | url_encode }}&text={{ page.title | url_encode }}" class="btn btn--telegram" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="{{ site.data.ui-text[site.locale].share_on_label | default: 'Share on' }} Telegram"><i class="fab fa-fw fa-telegram" aria-hidden="true"></i><span> Telegram</span></a>
+
+  <!-- WeChat -->
+  <a href="#" class="btn btn--wechat" onclick="showWeChatQR(); return false;" title="{{ site.data.ui-text[site.locale].share_on_label | default: 'Share on' }} WeChat"><i class="fab fa-fw fa-weixin" aria-hidden="true"></i><span> WeChat</span></a>
+
+  <!-- Copy Link -->
+  <a href="#" class="btn btn--link" onclick="copyLink(); return false;" title="Copy Link"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span> Copy Link</span></a>
+<!-- WeChat QR Code Modal -->
+<div id="wechat-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
+  <div style="background:white; padding:20px; border-radius:8px; text-align:center;">
+    <h3>扫码分享到微信</h3>
+    <div id="wechat-qrcode"></div>
+    <button onclick="closeWeChatQR()" style="margin-top:15px; padding:8px 20px; cursor:pointer;">关闭</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+function showWeChatQR() {
+  var modal = document.getElementById('wechat-modal');
+  var qrcodeContainer = document.getElementById('wechat-qrcode');
+  qrcodeContainer.innerHTML = '';
+  
+  new QRCode(qrcodeContainer, {
+    text: window.location.href,
+    width: 200,
+    height: 200
+  });
+  
+  modal.style.display = 'flex';
+}
+
+function closeWeChatQR() {
+  document.getElementById('wechat-modal').style.display = 'none';
+}
+
+function copyLink() {
+  var url = window.location.href;
+  
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(function() {
+      alert('链接已复制到剪贴板！');
+    }, function() {
+      fallbackCopyLink(url);
+    });
+  } else {
+    fallbackCopyLink(url);
+  }
+}
+
+function fallbackCopyLink(text) {
+  var textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.position = "fixed";
+  textArea.style.top = 0;
+  textArea.style.left = 0;
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  
+  try {
+    document.execCommand('copy');
+    alert('链接已复制到剪贴板！');
+  } catch (err) {
+    alert('复制失败，请手动复制：' + text);
+  }
+  
+  document.body.removeChild(textArea);
+}
+</script>
 </section>

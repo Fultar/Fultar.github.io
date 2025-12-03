@@ -2,7 +2,26 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 search: false
 ---
+.btn--telegram {
+  background-color: #0088cc;
+  &:hover {
+    background-color: #006699;
+  }
+}
 
+.btn--wechat {
+  background-color: #09b83e;
+  &:hover {
+    background-color: #078b30;
+  }
+}
+
+.btn--link {
+  background-color: #6c757d;
+  &:hover {
+    background-color: #5a6268;
+  }
+}
 @charset "utf-8";
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
