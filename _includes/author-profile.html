@@ -239,7 +239,9 @@
           </a>
         </li>
       {% endif %}
-
+	{% if page.author_profile or layout.author_profile or page.sidebar.nav %}
+		{% include author-profile-custom-links.html %}
+	{% endif %}
       {% include author-profile-custom-links.html %}
     </ul>
   </div>
