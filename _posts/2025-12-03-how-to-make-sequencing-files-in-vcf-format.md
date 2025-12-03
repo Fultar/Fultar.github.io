@@ -21,7 +21,7 @@ tags:
 首先，我们需要测序物种的参考基因组才能比对。参考基因组可以在ncbi上找到：https://www.ncbi.nlm.nih.gov/
 
 下载好参考基因组后，我使用bwa软件建立参考基因组的索引：
-```
+```shell
 # 这一步可能会花费些时间，我用nohup后台运行
 nohup bwa index -a is GCA_022435785.1_ASM2243578v1_genomic.fna > bwa_index.log 2>&1 &
 
@@ -30,7 +30,7 @@ nohup bwa index -a is GCA_022435785.1_ASM2243578v1_genomic.fna > bwa_index.log 2
 
 ## 1.2 序列比对
 看下bwa比对有哪些参数：
-```
+```shell
 # 参数
 bwa mem genomic.fa sample.R1.gz sample.R2.gz \
     -R '@RG\tID:sample\tLB:sample\tSM:sample\tPL:ILLUMINA' \ 2>sample_map.log \
@@ -80,7 +80,7 @@ QUAL: 比对序列的质量（ASCII-33=Phred base quality）reads碱基质量值
 
 **序列比对脚本：**
 运行该bash脚本，会在路径下生成```sam.sh```文件，里面的命令行就是所有需要比对的样本，可以每次执行五六个，避免服务器的计算资源耗尽
-```
+```shell
 #!/bin/bash
 
 for file in `ls -d ../rawdata/MS24_DNA_431-702/*R1.*.gz`; do
@@ -103,7 +103,7 @@ done > sam.sh
 ```
 
 打印bwa命令行的a和b参数，并检查样本是否相同，是否分别为R1和R2文件：
-```
+```shell
 awk '{print "ls -l  "$10}' sam.sh >z
 wc -l z
 sh z
@@ -115,7 +115,7 @@ rm z
 ```
 
 优化bash脚本内容：
-```
+```shell
 awk '{if(num==19){num=0;print} else{num++;print $0"\t&"}}' sam.sh >t
 
 mv t sam.sh
@@ -130,7 +130,7 @@ cat sam.sh
 ```
 
 如果上述命令一切正常，我们就可以运行脚本，开始生成sam比对结果文件：
-```
+```shell
 sh sam.sh >sam.sh.log &
 
 mkdir sam_log
@@ -147,7 +147,7 @@ for file in `ls *.sam.log`; do echo "$file"; tail -1 $file; done >sam_check
 这里开始，我们使用`gatk`软件进行后续步骤。
 
 `gatk ValidateSamFile`命令可以验证sam文件是否是标准格式。
-```
+```shell
 # 验证sam文件的格式有无错误，不然后续步骤会报错
 for file in `ls *.sam`; do x=${file/.sam/}; echo "nohup gatk  ValidateSamFile --INPUT "$file" >"$x".validate.log &"; done >validate.sh
 
@@ -156,7 +156,7 @@ sh validate.sh >validate.sh.log &
 ```
 
 为避免程序太多挤占服务器资源，可以修改上述脚本，分批运行程序：
-```
+```shell
 #!/bin/bash
 
 count=0
@@ -175,7 +175,7 @@ wait  # 等待最后一组不足6个的任务
 ```
 
 查看验证结果：
-```
+```shell
 mkdir validate_log
 mv *.validate.log validate_log/
 cd validate_log/
@@ -191,7 +191,7 @@ cd ..
 ## 1.4 SAM文件排序并压缩为BAM格式文件
 
 使用`gatk SortSam`命令压缩sam文件
-```
+```shell
 gatk SortSam -I samplename.sam \
 -O samplename_sorted.bam \
 --TMP_DIR sample.tmp \
@@ -204,7 +204,7 @@ gatk SortSam -I samplename.sam \
 ```
 
 我这里同时运行4个任务，防止任务太多挤占服务器资源
-```
+```shell
 #!/bin/bash
 
 count=0
@@ -224,7 +224,7 @@ echo "sort_sam.sh done\n"
 ```
 
 
-```
+```shell
 # 运行脚本
 sh sort_sam.sh >>sort_sam.sh.log 2>>sort_sam.sh.log &
 
@@ -258,14 +258,14 @@ samtools view -H my.bam
 这只针对DNA测序，RNA-Seq一般不去重。
 
 使用gatk的```MarkDuplicates```参数去重：
-```
+```shell
 -M samplename.deduplicated.metrics
 
 # 指定标记到的重复序列的文件名
 ```
 
 
-```
+```shell
 #!/bin/bash
 
 count=0
@@ -285,7 +285,7 @@ echo "sort_sam.sh done\n"
 ```
 
 
-```
+```shell
 # 运行脚本
 sh markDuplicates.sh >markDuplicates.sh.log  &
 
@@ -309,7 +309,7 @@ for file in `ls *.deduplicated.log`; do echo $file; more $file; done >check
 # 二、SNP caling
 ## 2.1 为bam文件构建索引
 同样，我们需要先对处理好的bam文件构建索引：
-```
+```shell
 #!/bin/bash
 
 count=0
@@ -329,7 +329,7 @@ echo "index.sh done\n"
 ```
 
 运行脚本：
-```
+```shell
 sh index_deduplicated.sh >index_deduplicated.sh.log &
 
 ls *.bai|wc -l
@@ -342,7 +342,8 @@ gatk CreateSequenceDictionary -R genome.fasta
 准备好bam文件（`*.deduplicated`后缀表示是去重复片段的bam文件）、参考基因组后，我们要先对单个样本生成`.gvcf`后缀的文件，然后再把单个样本的`gvcf`合并为群体的`vcf`格式。
 
 使用参数`--pcr-indel-model CONSERVATIVE -ERC GVCF`生成单样本`gvcf`格式文件：
-```
+
+```shell
 #!/bin/bash
 
 count=0
@@ -361,7 +362,7 @@ echo "gvcf.sh done\n"
 ```
 
 运行脚本：
-```
+```shell
 sh vcf.sh >gvcf.sh.log 2>&1 &
 
 ll -h *.gvcf
@@ -390,7 +391,7 @@ for file in `ls *.gvcf`; do x=${file/gvcf/}gvcf; mv $file $x; done
 
 1. 把每个样本的gvcf合并：
 
-```
+```shell
 ls *.gvcf >t
 
 awk '{c=c" -V "$0}END{print "nohup gatk CombineGVCFs  -R /home/genome/GCA_022435785.1_index/GCA_022435785.1_ASM2243578v1_genomic.fna "c" -O MS24_P2_combined.gvcf &"}' t >tt
@@ -401,7 +402,7 @@ sh tt
 
 2. 合并完成后检测基因分型，得到完整的vcf文件：
 
-```
+```shell
 nohup gatk GenotypeGVCFs -R /home/genome/GCA_022435785.1_index/GCA_022435785.1_ASM2243578v1_genomic.fna -V MS24_P2_combined.gvcf -O MS24_P2_combined.final.vcf >vcf_combined.final.log 2>vcf_combined.final.error&
 
 ```
@@ -413,7 +414,7 @@ nohup gatk GenotypeGVCFs -R /home/genome/GCA_022435785.1_index/GCA_022435785.1_A
 
 - 制作sample_map文件，包含需要合并的样本：
 
-```
+```shell
 #!/bin/bash
 
 # 输出文件名
@@ -435,7 +436,7 @@ done
 
 - 输出文件格式，第一列为新样本名，第二列为待合并的gvcf样本名，两个名字可以一样，也可以不一样重新命名：
 
-```
+```shell
 $head sample_table.txt
 sample1      sample1.gvcf.gz
 sample2      sample2.gvcf.gz
@@ -447,7 +448,7 @@ sample3      sample3.gvcf.gz
 这步将每个样本`gvcf`的染色体数据摘取出来。
  - GenomicsDBImport生成数据集
 
-```
+```shell
 #!/bin/bash
 
 >tt
@@ -465,7 +466,7 @@ echo "nohup gatk GenomicsDBImport  \
     >${CHR}_nohup.log 2>${CHR}_error.log &" >>tt
 done
 ```
-```
+```shell
 sh tt >chr.log&
 ```
 
@@ -473,7 +474,7 @@ sh tt >chr.log&
 
 - 检查合并有无出错：
 
-```
+```shell
 for file in `ls *_nohup.log`; do more $file; done >check
 
 cat check
@@ -488,7 +489,7 @@ true
 
 上一步对样本的染色体生成一系列以染色体名`./vcf_chr/bass_${CHR}`分类的路径和零散文件，这步需要对每条染色体检测变异位点：
 
-```
+```shell
 nohup gatk GenotypeGVCFs \
     -R /home/genome/GCA_022435785.1_index/GCA_022435785.1_ASM2243578v1_genomic.fna \
     -V gendb://bass_CM039554.1 \
@@ -499,7 +500,7 @@ nohup gatk GenotypeGVCFs \
 
 - 脚本：
 
-```
+```shell
 #!/bin/bash
 
 >tt
@@ -520,14 +521,14 @@ echo "Mission Complete."
 
 检查有无报错：
 
-```
+```shell
 for file in `ls *.error.log`; do tail -4 $file; done >check
 ```
 
 ## 2.4.4. 合并vcf样本
 对每条染色体查找变异后，我们便可以把结果合并起来，组成样本群体的vcf文件。
 
-```
+```shell
 #!/bin/bash
 
 # 输出合并后的文件名
@@ -561,7 +562,7 @@ echo "nohup gatk MergeVcfs $input_params O=$output >combined_chr_vcf.nohup.log 2
 
 ```
 
-```
+```shell
 # 运行脚本
 sh t >combined_vcf.log $
 ```
