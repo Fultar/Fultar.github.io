@@ -24,23 +24,30 @@ layout: archive
       {% for post in year.items %}
         {% include archive-single.html type=entries_layout %}
       {% endfor %}
-	<div id="gitalk-container"></div>
-<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
-<script src="/js/md5.min.js"></script>
-<script type="text/javascript">
+	  
+	  
+	 <div id="gitalk-container"></div>
+	<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+	<style lang="scss">
+		.gt-header-textarea {
+			color: #000 !important;
+		}
+	</style>
+	<script src="/js/gitalk.min.js"></script>
+	<script src="/js/md5.min.js"></script>
+	<script type="text/javascript">
     var gitalk = new Gitalk({
-        clientID: Ov23liFbhdhIiga5RCX6 '自己的Client ID',
-        clientSecret: 0258d64c573ec1e3c900b72be86889fa8acdd55c '自己的Client secret',
-        repo: Fultar.github.io '评论存放的仓库名称',
-        owner: Fultar 'Github ID/username',
-        admin: Fultar ['同owner, 也可添加其他管理员'],
+        clientID: 'Ov23liFbhdhIiga5RCX6' '自己的Client ID',
+        clientSecret: '0258d64c573ec1e3c900b72be86889fa8acdd55c' '自己的Client secret',
+        repo: 'Fultar.github.io' '评论存放的仓库名称',
+        owner: 'Fultar' 'Github ID/username',
+        admin: ['Fultar'] ['同owner, 也可添加其他管理员'],
         id: md5(location.href.match('/(?<=posts/)(.*)(?=/)/')[1]),
         language: 'en',
         perPage: 10,
     });
     gitalk.render('gitalk-container');
-</script>
+	</script>
 
     </div>
     <a href="#page-title" class="back-to-top">{{ site.data.ui-text[site.locale].back_to_top | default: 'Back to Top' }} &uarr;</a>
