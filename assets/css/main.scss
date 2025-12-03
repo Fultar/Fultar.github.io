@@ -26,3 +26,41 @@ search: false
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+// 友情链接图标样式
+.friendlinks-icons {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  justify-content: flex-start;
+  padding: 0.5em 0 !important;
+  
+  li {
+    list-style: none;
+    margin: 0 !important;
+    
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #f3f3f3;
+      color: #555;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      
+      &:hover {
+        background-color: #007bff;
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+      }
+      
+      i {
+        font-size: 1.1em;
+      }
+    }
+  }
+}
