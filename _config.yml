@@ -246,32 +246,6 @@ permalink: /:categories/:title/
 timezone: Asia/Shanghai # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
-gitalk:
-  enable: true
-  github_id: Fultar 
-  repo: Fultar.github.io 
-  client_id: Ov23liFbhdhIiga5RCX6 
-  client_secret: 0258d64c573ec1e3c900b72be86889fa8acdd55c # 前面拿到的Client secret
-
-comments:
-  active: # The global switch for posts comments, e.g., 'disqus'.  Keep it empty means disable
-  # The active options are as follows:
-  disqus:
-    shortname: # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
-  # utterances settings › https://utteranc.es/
-  utterances:
-    repo: # <gh-username>/<repo>
-    issue_term: # < url | pathname | title | ...>
-  # Giscus options › https://giscus.app
-  giscus:
-    repo: # <gh-username>/<repo>
-    repo_id:
-    category:
-    category_id:
-    mapping: # optional, default to 'pathname'
-    input_position: # optional, default to 'bottom'
-    lang: # optional, default to the value of `site.lang`
-    reactions_enabled: # optional, default to the value of `1`
    
 # Pagination with jekyll-paginate
 paginate: 5 # amount of posts to show
