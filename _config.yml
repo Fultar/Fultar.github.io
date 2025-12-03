@@ -249,7 +249,7 @@ timezone: Asia/Shanghai # https://en.wikipedia.org/wiki/List_of_tz_database_time
 gitalk:
   enable: true
   github_id: Fultar # 你的Github ID/用户名
-  repo: https://github.com/Fultar/Fultar.github.io # 评论存放的仓库名称，可以是Github Page(username.github.io)所在的仓库或者另建一个仓库
+  repo: Fultar.github.io # 评论存放的仓库名称，可以是Github Page(username.github.io)所在的仓库或者另建一个仓库
   client_id: Ov23liFbhdhIiga5RCX6 # 前面拿到的Client ID
   client_secret: 0258d64c573ec1e3c900b72be86889fa8acdd55c # 前面拿到的Client secret
 
