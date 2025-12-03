@@ -2,9 +2,7 @@
 title: "如何将测序文件制作为vcf格式的文件"
 date: 2025-12-03
 categories: 
- - 生物信息学
- - 测序分析
- - 变异查找
+ - GWAS
 tags: 
  - VCF
  - bwa
