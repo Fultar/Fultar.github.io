@@ -12,7 +12,7 @@ tags:
 ## 1.1 vcf文件转为plink格式
 
 原始vcf文件一般较大，包含了很多不必要的信息，可以删去没用的信息来缩小体积，加快后续分析的速度
-```
+```shell
 # 压缩vcf文件
 nohup tar -zcvf ZY-Fu-all_sample.vcf.tar.gz ZY-Fu-all_sample.vcf&
 
@@ -40,7 +40,7 @@ plink --vcf ../rawdata/ZY-Fu_vcftoolsFilte.vcf --recode --out ZY-Fu-all_sample -
 
 过滤质量决定了后续分析结果的可靠性。由于本人使用的是水产鱼类的数据，样本量较小，表型测试也不像人类疾病标准化，所以没进行过于严格的过滤，而是采用略宽泛的标准过滤低质量SNP，尽可能保留效应SNPs。
 
-```
+```shell
 #ped/map转为二进制格式 bed/bim/fam
 plink --file ZY-Fu-all_sample --make-bed --out ZY-Fu-all_sample --allow-extra-chr
 
@@ -77,7 +77,7 @@ plink自带的是广义线性模型，我们可以尝试做下。
 ## 2.1 LM assoc模型
 
 如果表型是连续型变量，可以使用assoc模型进行线性回归分析。
-```
+```shell
 plink --bfile ZY-Fu-all_sample_geno_maf_hwe --assoc --pheno ZY-Fugu-phenotype.txt  --out ZY_Fugu_assoc_results --allow-extra-chr --allow-no-sex
 
 
@@ -92,7 +92,7 @@ sample3 sample3 19
 ## 2.2 LM logistics模型
 
 logistics模型针对的是二分类表型，需要你的表型为“0”或“1”分类。
-```
+```sehll
 plink --bfile ZY-Fu-all_sample_geno_maf_hwe --logistic --pheno ZY-Fugu-phenotype.txt  --out ZY_Fugu_assoc_results --allow-extra-chr --allow-no-sex
 
 ```
@@ -105,7 +105,7 @@ plink --bfile ZY-Fu-all_sample_geno_maf_hwe --logistic --pheno ZY-Fugu-phenotype
 
 我这里使用gemma构建LMM，GCTA也可以构建LMM。
 
-```
+```shell
 # 合法表型文件
 ## gemma表型只要第三列的表型值，前两列的样本名不需要
 awk '{print $3}' ../ZY-Fugu-phenotype.txt>./ZY-Fugu-phenotype.gemma.txt
