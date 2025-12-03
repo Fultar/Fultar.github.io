@@ -15,16 +15,10 @@ main:
   
   - title: "归档"
     url: /year-archive/
-  
-  - title: "关于"
-    url: /about/
-  
-  - title: "项目"
-    url: /portfolio/
-  
+    
   # 外部链接示例
   - title: "GitHub"
-    url: https://github.com/your-username
+    url: https://github.com/Fultar/
   
   # 下拉菜单（需要额外配置）
   - title: "更多"
