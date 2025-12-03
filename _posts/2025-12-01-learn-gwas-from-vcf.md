@@ -2,7 +2,6 @@
 title: "从VCF文件开始进行GWAS分析"
 date: 2025-12-01
 categories: 
-  - 生物信息学
   - GWAS
 tags: 
   - GWAS
