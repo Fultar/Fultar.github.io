@@ -92,7 +92,7 @@ sample3 sample3 19
 ## 2.2 LM logistics模型
 
 logistics模型针对的是二分类表型，需要你的表型为“0”或“1”分类。
-```sehll
+```shell
 plink --bfile ZY-Fu-all_sample_geno_maf_hwe --logistic --pheno ZY-Fugu-phenotype.txt  --out ZY_Fugu_assoc_results --allow-extra-chr --allow-no-sex
 
 ```
