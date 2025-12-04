@@ -29,20 +29,26 @@ nohup bwa index -a is GCA_022435785.1_ASM2243578v1_genomic.fna > bwa_index.log 2
 ```
 
 ## 1.2 序列比对
+
+### 1.2.1 sam文件格式说明
 看下bwa比对有哪些参数：
 ```shell
 # 参数
-bwa mem genomic.fa sample.R1.gz sample.R2.gz \
-    -R '@RG\tID:sample\tLB:sample\tSM:sample\tPL:ILLUMINA' \ 2>sample_map.log \
-    | samtools sort -@ 20 -O bam -o sample.sorted.bam 1>sample_sort.log 2>&1
+bwa mem \     # MEM算法进行比对，适合70bp-1Mbp的长读长测序数据
+    -t 4 \    # 线程数
+    -M \      # 将较短的分割比对（split alignments）标记为次优比对（secondary）
+    genomic.fa \      # 参考基因组文件（需要事先用bwa index建立索引）
+    sample.R1.gz \    # 样本R1序列
+    sample.R2.gz \    # 样本R2序列
+    -R '@RG\tID:sample\tLB:sample\tSM:sample\tPL:ILLUMINA'  \     # Bam表头信息，用于区分不同样本、文库和测序批次，很重要，不可删除
+    -o samplename.sam     # 输出文件
 
 # -R 选项为必须选项，用于定义头文件中的SAM/BAM文件中的read group和sample信息
 ```
 SAM文件由两部分组成，头部区和主体区，都以tab分列:
 
-- 头部区：以’@'开始，体现了比对的一些总体信息:
+1. 头部区：以’@'开始，体现了比对的一些总体信息:
   
-```
 @HD VN:1.0 SO:unsorted （排序类型）
 
 @SQ SN:contig1 LN:9401 （序列ID及长度）
@@ -50,11 +56,10 @@ SAM文件由两部分组成，头部区和主体区，都以tab分列:
 @RG ID:sample01 （样品基本信息）
 
 @PG ID:bowtie2 PN:bowtie2 VN:2.0.0-beta7 （比对所使用的软件及版本）
-```
 
-- 主体区：比对结果，每一个比对结果是一行，有11个主列和一个可选列:
 
-```
+2. 主体区：比对结果，每一个比对结果是一行，有11个主列和一个可选列:
+
 QNAME:比对的序列名称
 
 FLAG:Bwise FLAG（表明比对类型：paring，strand，mate strand等）
@@ -76,8 +81,8 @@ ISIZE: 插入片段长度
 SEQ: 和参考序列在同一个链上比对的序列（若比对结果在负义链上，则序列是其反向重复序列，反向互补序列
 
 QUAL: 比对序列的质量（ASCII-33=Phred base quality）reads碱基质量值
-```
 
+### 1.2.2 生成sam文件
 **序列比对脚本：**
 运行该bash脚本，会在路径下生成```sam.sh```文件，里面的命令行就是所有需要比对的样本，可以每次执行五六个，避免服务器的计算资源耗尽
 ```shell
