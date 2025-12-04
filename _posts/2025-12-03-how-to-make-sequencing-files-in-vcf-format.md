@@ -119,7 +119,7 @@ sh z
 rm z
 ```
 
-优化bash脚本内容：
+优化上一步生成的`sam.sh`脚本内容：
 ```shell
 awk '{if(num==19){num=0;print} else{num++;print $0"\t&"}}' sam.sh >t
 
@@ -134,7 +134,7 @@ echo "echo \"sam.sh for 6 is done\"" >>sam.sh
 cat sam.sh
 ```
 
-如果上述命令一切正常，我们就可以运行脚本，开始生成sam比对结果文件：
+如果上述命令一切正常，我们就可以运行脚本，开始生成sam格式的比对结果文件：
 ```shell
 sh sam.sh >sam.sh.log &
 
@@ -149,7 +149,7 @@ for file in `ls *.sam.log`; do echo "$file"; tail -1 $file; done >sam_check
 
 
 ## 1.3 验证sam文件
-这里开始，我们使用`gatk`软件进行后续步骤。
+这里开始，我们使用`gatk`软件进行后续的变异查找步骤。
 
 `gatk ValidateSamFile`命令可以验证sam文件是否是标准格式。
 ```shell
