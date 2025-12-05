@@ -5,7 +5,7 @@ categories:
   - GWAS
 tags: 
   - GWAS
-  - VCF file
+  - VCF
 ---
 # 一、VCF文件转格式和位点过滤
 
