@@ -20,7 +20,7 @@ tags:
 
 首先，我们需要测序物种的参考基因组才能比对。参考基因组可以在ncbi上找到：https://www.ncbi.nlm.nih.gov/
 
-下载好参考基因组后，我使用bwa软件建立参考基因组的索引：
+下载好参考基因组后，使用bwa软件建立参考基因组的索引：
 ```shell
 # 这一步可能会花费些时间，我用nohup后台运行
 nohup bwa index -a is GCA_022435785.1_ASM2243578v1_genomic.fna > bwa_index.log 2>&1 &
@@ -49,42 +49,42 @@ SAM文件由两部分组成，头部区和主体区，都以tab分列:
 
 1. 头部区：以’@'开始，体现了比对的一些总体信息:
   
-@HD VN:1.0 SO:unsorted （排序类型）
+- @HD VN:1.0 SO:unsorted （排序类型）
 
-@SQ SN:contig1 LN:9401 （序列ID及长度）
+- @SQ SN:contig1 LN:9401 （序列ID及长度）
 
-@RG ID:sample01 （样品基本信息）
+- @RG ID:sample01 （样品基本信息）
 
-@PG ID:bowtie2 PN:bowtie2 VN:2.0.0-beta7 （比对所使用的软件及版本）
+- @PG ID:bowtie2 PN:bowtie2 VN:2.0.0-beta7 （比对所使用的软件及版本）
 
 
 2. 主体区：比对结果，每一个比对结果是一行，有11个主列和一个可选列:
 
-QNAME:比对的序列名称
+- QNAME:比对的序列名称
 
-FLAG:Bwise FLAG（表明比对类型：paring，strand，mate strand等）
+- FLAG:Bwise FLAG（表明比对类型：paring，strand，mate strand等）
 
-RENAME:比对上的参考序列名;例如：NC_000075.6
+- RENAME:比对上的参考序列名;例如：NC_000075.6
 
-POS: 1-Based的比对上的最左边的定位
+- POS: 1-Based的比对上的最左边的定位
 
-MAPQ: 比对质量
+- MAPQ: 比对质量
 
-CIGAR Extended CIGAR string:（操作符：MIDNSHP）比对结果信息；匹配碱基数，可变剪接等
+- CIGAR Extended CIGAR string:（操作符：MIDNSHP）比对结果信息；匹配碱基数，可变剪接等
 
-MRNM: 相匹配的另外一条序列，比对上的参考序列名
+- MRNM: 相匹配的另外一条序列，比对上的参考序列名
 
-MPOS: 1-Based leftmost Mate Position （相比于MRNM列来讲意思和POS差不多
+- MPOS: 1-Based leftmost Mate Position （相比于MRNM列来讲意思和POS差不多
 
-ISIZE: 插入片段长度
+- ISIZE: 插入片段长度
 
-SEQ: 和参考序列在同一个链上比对的序列（若比对结果在负义链上，则序列是其反向重复序列，反向互补序列
+- SEQ: 和参考序列在同一个链上比对的序列（若比对结果在负义链上，则序列是其反向重复序列，反向互补序列
 
-QUAL: 比对序列的质量（ASCII-33=Phred base quality）reads碱基质量值
+- QUAL: 比对序列的质量（ASCII-33=Phred base quality）reads碱基质量值
 
 ### 1.2.2 生成sam文件
 **序列比对脚本：**
-运行该bash脚本，会在路径下生成```sam.sh```文件，里面的命令行就是所有需要比对的样本，可以每次执行五六个，避免服务器的计算资源耗尽
+运行该bash脚本，会在路径下生成`sam.sh`文件，里面的命令行就是所有需要比对的样本，可以设置循环，每轮循环执行五个比对命令，避免耗尽服务器的计算资源
 ```shell
 #!/bin/bash
 
