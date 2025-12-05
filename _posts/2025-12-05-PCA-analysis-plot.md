@@ -102,7 +102,7 @@ ggsave('主成分分析图.png', width = 12, height = 8, dpi = 300)
 ```
 
 可以看到通过前两个主成分已经很好地把各家系样本区分开来，在后续的GWAS分析中，我们可以把PCA作为协变量加入模型。
-![alt text](images/pca_plot_1205.png)
+![alt text](https://github.com/Fultar/Fultar.github.io/tree/main/pictures/pca_plot_1205.png)
 
 
 
