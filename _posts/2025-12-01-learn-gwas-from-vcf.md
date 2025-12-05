@@ -31,9 +31,10 @@ grep -v '^##' ZY-Fu-all_sample_vcftoolsFilte.recode.vcf > ZY-Fu_vcftoolsFilte.vc
 #vcf转PLINK
 plink --vcf ../rawdata/ZY-Fu_vcftoolsFilte.vcf --recode --out ZY-Fu-all_sample --allow-extra-chr 
 
-## Total genotyping rate is 0.712254.
-## 1612479 variants and 289 people pass filters and QC.
-
+# --allow-extra-chr 如果染色体带字母等字符，比如“chr1_gl000191_random”，需要使用此参数
+# --chr-set 30  如果染色体条数多于23条，需要设定此参数
+# --allow-no-sex  如果分析物种不需要区分性染色体可以调用此参数
+# --double-id   样本名中如果含有多个下划线，需要调用此参数，避免报错
 ```
 
 ## 1.2 位点过滤
@@ -46,23 +47,17 @@ plink --file ZY-Fu-all_sample --make-bed --out ZY-Fu-all_sample --allow-extra-ch
 
 #检查缺失信息
 plink --file ZY-Fu-all_sample --missing --allow-extra-chr 
-wc -l plink.lmiss ; 22664285 plink.lmiss
 
 ## 过滤SNP缺失率高于10%的SNP
 plink --bfile ZY-Fu-all_sample --geno 0.10 --make-bed --out ZY-Fu-all_sample_geno --chr-set 24 --double-id --allow-extra-chr
 
-## 1284319 variants removed due to missing genotype data (--geno).
-## 328160 variants and 289 samples pass filters and QC.
 
 # 过滤maf率低于5%的SNP
 plink --bfile ZY-Fu-all_sample_geno --maf 0.05 --make-bed --out ZY-Fu-all_sample_geno_maf --chr-set 24 --double-id --allow-extra-chr
 
-## 225659 variants removed due to minor allele threshold(s)
-## 102501 variants and 289 samples pass filters and QC.
 
 # 哈温平衡过滤
 plink --bfile ZY-Fu-all_sample_geno_maf --hwe 1e-4 --make-bed --out ZY-Fu-all_sample_geno_maf_hwe --chr-set 24 --double-id --allow-extra-chr
-## 85636 variants and 289 samples pass filters and QC.
 
 ## 构建pca文件，作为协变量加入模型
 plink --allow-extra-chr --allow-no-sex --threads 20 -bfile ZY-Fu-all_sample_geno_maf_hwe --pca 3 --out ./pca/ZY-Fu-pca
