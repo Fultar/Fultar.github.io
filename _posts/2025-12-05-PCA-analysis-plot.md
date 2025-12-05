@@ -69,8 +69,26 @@ gc()
 file_pca_val <- read.table("pca.eigenval",header = F)
 file_pca_vec <- read.table("pca.eigenvec",header = F)
 
+# > head(file_pca_vec)
+#          V1          V2        V3         V4         V5 
+# MS24_P2_601 MS24_P2_601 0.1118100  0.2149710 0.13412900    
+# MS24_P2_602 MS24_P2_602 0.0831065  0.1877040 0.15384700      
+# MS24_P2_603 MS24_P2_603 0.1211640  0.2145500 0.14093700      
+# MS24_P2_604 MS24_P2_604 0.0992557  0.1947370 0.16821500      
+# MS24_P2_605 MS24_P2_605 0.0713111 -0.0752131 0.00596257     
+# MS24_P2_606 MS24_P2_606 0.0622080 -0.0869438 0.02502900     
+
 ### 表型类群、家系文件
-file_group <- read.table("RNA测序样本分类.txt",header = T)
+file_group <- read.table("样本分类.txt",header = T)
+
+# > head(file_group)
+#         sample family
+# MS24_P2_RNA601      Y 
+# MS24_P2_RNA602      Y 
+# MS24_P2_RNA603      Y 
+# MS24_P2_RNA604      Y 
+# MS24_P2_RNA605     AC 
+# MS24_P2_RNA606     AC 
 
 #### 为pca添加家系表型
 file_pca_vec$family <- file_group$family
