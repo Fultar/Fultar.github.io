@@ -9,7 +9,6 @@ tags:
  - PCA
  - ggplot
  - GWAS
- - principal components analysis
  - linux
  - plink
  - bash
