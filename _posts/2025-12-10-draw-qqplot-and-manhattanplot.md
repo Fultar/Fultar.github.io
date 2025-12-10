@@ -3,6 +3,7 @@
 在完成GWAS的LMM线性模型分析后会得到各位点的数据，包括位点的等位基因和频率、效应值（beta）、显著性P值等。
 ```shell
 # 通过GEMMA LMM模型分析得到的结果文件格式：
+$head gwas_results.assoc.txt
 chr	rs	ps	n_miss	allele1	allele0	af	beta	se	logl_H1	l_remle	l_mle	p_wald	p_lrt	p_score
 1	.	3529	0	C	A	0.427	1.100208e+00	1.872614e+00	-3.510330e+02	1.000000e+05	1.000000e+05	5.583062e-01	5.465892e-01	5.484665e-01
 1	.	3565	0	T	A	0.495	6.400726e-01	2.872317e+00	-3.511885e+02	1.000000e+05	1.000000e+05	8.241580e-01	8.189848e-01	8.195225e-01
