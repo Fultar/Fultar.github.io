@@ -32,6 +32,8 @@ chr	rs	ps	n_miss	allele1	allele0	af	beta	se	logl_H1	l_remle	l_mle	p_wald	p_lrt	p
 #install.packages('CMplot')
 library(CMplot)
 library(data.table) # 加快读取文件的速度
+library(tidyverse)
+
 
 rm(list = ls())
 gc()
