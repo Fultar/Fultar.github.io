@@ -1,3 +1,17 @@
+---
+title: "GWAS qq图和曼哈顿图绘制"
+date: 2025-12-10
+categories: 
+ - R
+ - GWAS
+tags: 
+ - R
+ - GWAS
+ - CMplot
+ - qqPlot
+ - manhattanPlot
+---
+
 # 一、数据准备
 
 在完成GWAS的LMM线性模型分析后会得到各位点的数据，包括位点的等位基因和频率、效应值（beta）、显著性P值等。
