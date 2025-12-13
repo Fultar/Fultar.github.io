@@ -40,7 +40,7 @@ gc()
 
 LMM_result = fread("gwas_results.assoc.txt")
 
-# 计算P值，更方便比较
+# 计算P值，方便比较
 LMM_result$logP <- -log10(LMM_result$`p_wald`)
 
 # cmplot只需要4列：snpid、染色体、pos、p值
