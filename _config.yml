@@ -23,7 +23,7 @@ locale                   : "en-US"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
 title                    : "XiangLi Blog"
 title_separator          : "-"
-subtitle                 : "分享我的技术与生活" # site tagline that appears below site title in masthead
+subtitle                 : "我读瘾犯了" # site tagline that appears below site title in masthead
 name                     : "Xiang Li"
 description              : "我的生信笔记"
 location                 : "China·Shanghai"
