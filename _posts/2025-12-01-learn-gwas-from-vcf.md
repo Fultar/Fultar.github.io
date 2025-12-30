@@ -66,6 +66,28 @@ plink --bfile ZY-Fu-all_sample_geno_maf --hwe 1e-4 --make-bed --out ZY-Fu-all_sa
 plink --allow-extra-chr --allow-no-sex --threads 20 -bfile ZY-Fu-all_sample_geno_maf_hwe --pca 3 --out ./pca/ZY-Fu-pca
 ```
 
+## 1.3 SNP位点填充
+过滤完的snp仍然有许多缺失的基因型(缺失率<20%)，在后续的LMM建模时(比如GEMMA软件等)，凡是有缺失的位点都会被忽略，所以我们必须填充这些缺失的位点。
+
+填充有两种方法：自填充和参考填充。如果你的数据有之前测序深度较深(>10X)、样本量较多(>500)的批次，可以利用它作为参考面板，根据LD原理填充测序深度浅的数据。填充后的数据理论上拥有和参考面板同样的位点数量。但是，如果没有好的参考面板，那只能进行自填充。
+
+由于我们之前已经把数据过滤了一遍，留下的都是高质量位点，因此即便使用的是自填充，依然能维持良好的填充正确率。
+```shell
+# 把plink过滤结果文件转为vcf格式，方便后续分析
+plink --bfile ZY-Fu-all_sample_geno_maf_hwe --recode vcf-iid -out ZY-Fu-all_sample_geno_maf_hwe --double-id
+
+# 方法一：如果没有参考面板，选择自填充
+# beagle填充过滤好的基因型数据
+java -Xmx100g -jar /home/yzhou/biosoft/beagle_v5.5/beagle.27Feb25.75f.jar window=50 overlap=20  gt=SNP_plink.vcf out=SNP_plink.beagle
+
+# 方法二：也可以利用已有的vcf文件作为参考系来填充
+java -Xmx100g -jar /home/yzhou/biosoft/beagle_v5.5/beagle.27Feb25.75f.jar window=50 overlap=20  ref=gwas_data/SNP_dataset.vcf gt=SNP_plink.vcf out=SNP_plink.beagle
+
+
+# 再把过滤完的vcf文件转为plink格式，用于LM模型软件
+plink --vcf SNP_plink.beagle.vcf --make-bed --out SNP_plink.beagle --double-id
+```
+
 # 二、GWAS模型构建
 
 通过以上的过滤，我们得到了较高质量的SNPs，这些可靠的SNPs能用于后续的建模分析。
@@ -101,7 +123,7 @@ plink --bfile ZY-Fu-all_sample_geno_maf_hwe --logistic --pheno ZY-Fugu-phenotype
 
 这就需要混合线性模型了，它通过引入遗传关系矩阵（kinship marix），排除因为样本间因为相似的遗传背景导致类似的表型。
 
-我这里使用gemma构建LMM，GCTA也可以构建LMM。
+我这里使用`gemma`构建LMM，其他类似的软件，如`GCTA`也可以构建LMM。
 
 ```shell
 # 合法表型文件
@@ -109,12 +131,12 @@ plink --bfile ZY-Fu-all_sample_geno_maf_hwe --logistic --pheno ZY-Fugu-phenotype
 awk '{print $3}' ../ZY-Fugu-phenotype.txt>./ZY-Fugu-phenotype.gemma.txt
 
 # 输出亲缘关系矩阵
-gemma-0.98.5-linux-static-AMD64 -bfile ../ZY-Fu-all_sample_geno_maf_hwe -p ZY-Fugu-phenotype.gemma.txt -gk 2 -o ZY_Fugu_kinship
+gemma-0.98.5-linux-static-AMD64 -bfile ../ZY-Fu-all_sample_geno_maf_hwe.beagle -p ZY-Fugu-phenotype.gemma.txt -gk 2 -o ZY_Fugu_kinship
 
 ## 生成的kinship矩阵在 output/ 路径下
 
 # LMM模型分析
-gemma-0.98.5-linux-static-AMD64  -bfile ../ZY-Fu-all_sample_geno_maf_hwe -k output/ZY_Fugu_kinship.sXX.txt -lmm 1 -p ZY-Fugu-phenotype.gemma.txt -o ZY_Fugu_LMM
+gemma-0.98.5-linux-static-AMD64  -bfile ../ZY-Fu-all_sample_geno_maf_hwe.beagle -k output/ZY_Fugu_kinship.sXX.txt -lmm 2 -p ZY-Fugu-phenotype.gemma.txt -o ZY_Fugu_LMM
 
 ```
 
