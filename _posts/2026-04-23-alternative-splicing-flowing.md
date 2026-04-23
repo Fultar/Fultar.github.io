@@ -181,6 +181,6 @@ rmats2sashimiplot --b1 /home/xiang/alternative/01.gonad_transcriptome/rmats/5dph
 ```
 
 生成的`pdf`文件：
-![alt text](/pictures/sashimiplot_sample)
+![alt text](/pictures/sashimiplot_sample.png)
 
 纵轴`RPKM`为表达量高低；每个色块间的连接线表示检测到多少reads没有这段区域，该区域可能发生了剪切事件
