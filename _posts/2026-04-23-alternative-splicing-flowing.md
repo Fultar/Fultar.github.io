@@ -12,6 +12,8 @@ tags:
  - sashimiplot
 ---
 
+本流程使用`rMATS-turbo`分析罗非鱼样本间的可变剪切变化，并使用`rmats2sashimiplot`可视化。
+
 # 一、rMATS安装
 
 推荐使用`conda`安装：
@@ -58,7 +60,7 @@ conda install -c conda-forge gsl
    
 
 2. 待分析物种的`gft`格式的注释文件；
-如果没有gft文件，可以用`gffread`软件将`gff`文件转换为`gtf`格式
+如果没有`gft`文件，可以用`gffread`软件将`gff`文件转换为`gtf`格式
 ```bash
 gffread -T genomic.gff  -o genomic.gtf
 ```
