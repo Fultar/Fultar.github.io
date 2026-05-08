@@ -13,9 +13,9 @@ tags:
 
 HiBLUP，中文名“天权”，是华中农业大学赵书红教授团队开发的一款针对农业动物遗传育种的全基因组选择软件。
 
-相比于之前的一系列育种值计算软件，Hiblup最大的优势是计算速度快，此外可选择的计算模型多，不仅能计算BLUP和GBLUP，还可以计算PBLUP、SSBLUP，还能够根据单性状和多性状计算育种值。总之，比我之前用的`rrBLUP `R包，它的可拓展性太高了。
+相比于之前的一系列育种值计算软件，Hiblup最大的优势是计算速度快，此外可选择的计算模型多，不仅能计算BLUP和GBLUP，还可以计算PBLUP、SSBLUP，还能够根据单性状和多性状计算育种值。总之，比`rrBLUP `R包的可拓展性高多了。
 
-官网地址：https://www.hiblup.com/
+官网地址：`https://www.hiblup.com/`
 
 下载方式在官网也有，支持Linux、Windows、MacOS等版本，我用的是Linux版本，数据处理也都是在Linux中处理的。
 
@@ -128,7 +128,7 @@ N181	49.6425
 ……
 ```
 
-再与`rrBLUP`R包估计的GBLUP值作比较：
+再与`rrBLUP`R包估计的GBLUP值作比较，好像`rrBLUP`多了一段截距：
 ```bash
 ID	GEBV_LOE(Ref353)
 N1649	162.1159151
