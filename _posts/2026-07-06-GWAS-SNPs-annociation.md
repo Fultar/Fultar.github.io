@@ -30,7 +30,7 @@ chr	rs	ps	n_miss	allele1	allele0	af	beta	se	logl_H1	l_remle	p_wald	logP
 ```
 
 我们需要从中提取三列信息（染色体、SNP位置）转为`snp.bed`格式：
-这三列依次是SNPs的染色体（chr）、位置起始（pos）和位置结束（pos+1）
+这三列依次是SNPs的染色体（chr）、位置起始（pos-1）和位置结束（pos）
 ```bash
 # snp.bed
 4	2050970	2050971
@@ -71,15 +71,6 @@ grep -v "^#" $GTF | awk '$3=="exon"' | \
     print $1"\t"$4-1"\t"$5"\t"g[1]"|"t[1]
   }' > fish_exons.bed
 
-# ── 提取CDS区间 ─────────────────────────────────────
-grep -v "^#" $GTF | awk '$3=="CDS"' | \
-  awk '{
-    match($0, /gene_id "([^"]+)"/, g)
-    print $1"\t"$4-1"\t"$5"\t"g[1]
-  }' > fish_cds.bed
-
-echo "GTF解析完成"
-wc -l fish_genes.bed fish_exons.bed fish_cds.bed
 ```
 
 
